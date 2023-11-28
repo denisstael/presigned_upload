@@ -16,7 +16,7 @@ module PresignedUpload
       # Initializes a new instance of the adapter.
       #
       def initialize
-        @storage_config = PresignedUpload.storage_config
+        @storage_config = PresignedUpload.configuration.storage_config
       end
 
       protected

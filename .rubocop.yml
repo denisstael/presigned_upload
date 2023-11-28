@@ -8,6 +8,8 @@ Style/Documentation:
   Enabled: true
   Exclude:
     - "lib/generators/presigned_upload/**"
+    - "spec/support/storage/*"
+    - "spec/support/*"
 
 Style/StringLiterals:
   Enabled: true

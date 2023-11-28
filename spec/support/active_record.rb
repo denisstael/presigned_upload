@@ -3,8 +3,6 @@
 require "active_record"
 require "presigned_upload/models"
 
-# rubocop:disable Style/Documentation
-
 class UploadLink < ActiveRecord::Base
   extend PresignedUpload::Models
 
@@ -14,5 +12,3 @@ class UploadLink < ActiveRecord::Base
     "generated_store_path"
   end
 end
-
-# rubocop:enable Style/Documentation

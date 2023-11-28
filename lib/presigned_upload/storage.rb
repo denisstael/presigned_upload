@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "presigned_upload/adapter/aws"
-
 module PresignedUpload
   # Storage module that provides a common interface for interacting with different storage adapters.
   #

@@ -4,35 +4,25 @@ require "spec_helper"
 
 RSpec.describe PresignedUpload do
   describe ".configure" do
-    it "yields self to the block for configuration" do
+    before do
+      allow_any_instance_of(PresignedUpload::Configuration).to receive(:configure!).and_return(nil)
+    end
+
+    it "configures the gem with the provided block" do
       PresignedUpload.configure do |config|
-        expect(config).to eq(PresignedUpload)
+        config.storage = :aws
+        config.storage_config = { bucket: "my_bucket", access_key: "abc" }
       end
-    end
-  end
 
-  describe ".storage_config" do
-    context "when storage config is not set" do
-      it "returns an empty hash" do
-        expect(PresignedUpload.storage_config).to eq({})
-      end
+      configuration = PresignedUpload.configuration
+      expect(configuration.storage).to eq(:aws)
+      expect(configuration.storage_config).to eq(bucket: "my_bucket", access_key: "abc")
     end
 
-    context "when storage config is set" do
-      before do
-        PresignedUpload.configure { |config| config.storage_config = { bucket: "bucket_name" } }
-      end
+    it "calls configure! on the configuration object" do
+      PresignedUpload.configure { |config| }
 
-      it "returns the configured storage config" do
-        expect(PresignedUpload.storage_config).to eq({ bucket: "bucket_name" })
-      end
-    end
-  end
-
-  describe ".storage" do
-    it "can set and retrieve the storage type" do
-      PresignedUpload.storage = :aws
-      expect(PresignedUpload.storage).to eq(:aws)
+      expect(PresignedUpload.configuration).to have_received(:configure!).once
     end
   end
 end

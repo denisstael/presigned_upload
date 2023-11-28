@@ -2,24 +2,23 @@
 
 require "presigned_upload/railtie"
 require "presigned_upload/version"
+require "presigned_upload/configuration"
+require "presigned_upload/errors"
+require "presigned_upload/adapter/base"
 
 # The `PresignedUpload` module serves as the main module for the presigned file upload functionality.
 # It provides configuration options, such as storage type and configuration settings.
 #
 module PresignedUpload
   class << self
-    attr_accessor :storage
-    attr_writer :storage_config
+    attr_accessor :configuration
 
     def configure
-      yield self
-    end
+      self.configuration ||= Configuration.new
 
-    # Returns the current storage configuration or an empty hash if not set.
-    #
-    # @return [Hash] The storage configuration.
-    def storage_config
-      @storage_config || {}
+      yield(configuration)
+
+      configuration.configure!
     end
   end
 end

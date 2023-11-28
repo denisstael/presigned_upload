@@ -13,6 +13,7 @@ module PresignedUpload
   # operations, such as generating presigned URLs, deleting stored files, and managing upload status.
   #
   # @example
+  #
   #   class MyUploadableModel < ApplicationRecord
   #     include Uploadable::Model
   #   end

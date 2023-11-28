@@ -12,6 +12,7 @@ module PresignedUpload
     # available the methods for requesting presigned_urls and deleting file from the cloud storage
     #
     # @example:
+    #
     #   UploadLink < ApplicationRecord
     #     presigned_uploadable
     #   end
@@ -35,6 +36,7 @@ module PresignedUpload
     #   in model, a String value representing the store path or a Proc to call
     #
     # @example
+    #
     #   UploadLink < ApplicationRecord
     #     presigned_uploadable_model, store_path: :generate_store_path
     #   end
