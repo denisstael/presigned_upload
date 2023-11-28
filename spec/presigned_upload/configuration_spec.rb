@@ -14,13 +14,13 @@ RSpec.describe PresignedUpload::Configuration do
   end
 
   describe "with aws" do
-    require "support/storage/aws"
+    require "support/storage/mock_aws"
 
     before { config.storage = :aws }
 
     context "with valid configuration" do
       it "does not raise an error" do
-        config.storage_config = { bucket: "my_bucket" }
+        config.storage_options = { bucket: "my_bucket" }
 
         expect { config.configure! }.not_to raise_error
       end
@@ -28,7 +28,7 @@ RSpec.describe PresignedUpload::Configuration do
 
     context "with empty storage configuration" do
       it "raises InvalidStorageConfig error" do
-        config.storage_config = {}
+        config.storage_options = {}
 
         expect do
           config.configure!
@@ -38,7 +38,7 @@ RSpec.describe PresignedUpload::Configuration do
 
     context "with missing required config keys for AWS storage" do
       it "raises InvalidStorageConfig error" do
-        config.storage_config = { intruder_key: "intruder_value" }
+        config.storage_options = { intruder_key: "intruder_value" }
 
         expect do
           config.configure!

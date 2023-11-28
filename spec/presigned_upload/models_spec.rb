@@ -22,7 +22,7 @@ RSpec.describe PresignedUpload::Models do
     context "when store_path is provided as a symbol" do
       before { UploadLink.presigned_uploadable_model(store_path: :generate_store_path) }
 
-      xit "sets store_path based on the symbol" do
+      it "sets store_path based on the symbol" do
         model_instance.run_callbacks(:create)
 
         expect(model_instance.store_path).to eq("generated_store_path")
@@ -32,7 +32,7 @@ RSpec.describe PresignedUpload::Models do
     context "when store_path is provided as a string" do
       before { UploadLink.presigned_uploadable_model(store_path: "custom_path") }
 
-      xit "sets store_path to the provided string" do
+      it "sets store_path to the provided string" do
         model_instance.run_callbacks(:create)
         expect(model_instance.store_path).to eq("custom_path")
       end
@@ -41,7 +41,7 @@ RSpec.describe PresignedUpload::Models do
     context "when store_path is provided as a Proc" do
       before { UploadLink.presigned_uploadable_model(store_path: -> { "custom_path_from_proc" }) }
 
-      xit "sets store_path based on the Proc" do
+      it "sets store_path based on the Proc" do
         model_instance.run_callbacks(:create)
         expect(model_instance.store_path).to eq("custom_path_from_proc")
       end
@@ -50,10 +50,10 @@ RSpec.describe PresignedUpload::Models do
     context "when store_path is not provided" do
       before { UploadLink.presigned_uploadable_model }
 
-      xit "sets a default store_path based on model attributes" do
+      it "sets a default store_path based on model attributes" do
         model_instance.original_name = "example.txt"
         model_instance.run_callbacks(:create)
-        expect(model_instance.store_path).to eq("uploads/test_models/example.txt")
+        expect(model_instance.store_path).to eq("uploads/upload_links/example.txt")
       end
     end
   end

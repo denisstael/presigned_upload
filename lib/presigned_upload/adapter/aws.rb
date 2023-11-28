@@ -63,7 +63,7 @@ module PresignedUpload
       #
       # @return [String] The name of the S3 bucket.
       def bucket_name
-        @bucket_name ||= storage_config[:bucket]
+        @bucket_name ||= storage_options[:bucket]
       end
 
       # Returns the S3 bucket resource for the configured bucket name.

@@ -38,7 +38,7 @@ module PresignedUpload
     #
     # @return [PresignedUpload::Adapter::Base] An instance of the configured storage adapter.
     def adapter
-      @adapter ||= "PresignedUpload::Adapter::#{PresignedUpload.storage.to_s.camelize}".constantize.new
+      @adapter ||= PresignedUpload.adapter_class.new
     end
   end
 end

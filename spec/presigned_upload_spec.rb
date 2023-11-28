@@ -11,12 +11,12 @@ RSpec.describe PresignedUpload do
     it "configures the gem with the provided block" do
       PresignedUpload.configure do |config|
         config.storage = :aws
-        config.storage_config = { bucket: "my_bucket", access_key: "abc" }
+        config.storage_options = { bucket: "my_bucket" }
       end
 
       configuration = PresignedUpload.configuration
       expect(configuration.storage).to eq(:aws)
-      expect(configuration.storage_config).to eq(bucket: "my_bucket", access_key: "abc")
+      expect(configuration.storage_options).to eq(bucket: "my_bucket")
     end
 
     it "calls configure! on the configuration object" do

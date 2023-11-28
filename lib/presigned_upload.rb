@@ -21,4 +21,8 @@ module PresignedUpload
       configuration.configure!
     end
   end
+
+  def self.adapter_class
+    @adapter_class ||= configuration.adapter_class
+  end
 end

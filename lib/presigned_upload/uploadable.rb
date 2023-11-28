@@ -43,13 +43,13 @@ module PresignedUpload
         after_destroy { delete_stored_file }
       end
 
-      # Returns a presigned URL for accessing the stored file. Returns `nil` if the upload status is 'initial'.
+      # Returns a presigned URL for accessing the stored file. Returns `nil` if the upload status is not 'completed'.
       #
       # @return [String, nil] The presigned URL for accessing the stored file or `nil` if the
-      #   upload status is initial.
+      #   upload status is not completed.
       #
       def url
-        return if initial?
+        return unless completed?
 
         presigned_url(store_path, :get)
       end

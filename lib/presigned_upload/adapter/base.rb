@@ -16,7 +16,7 @@ module PresignedUpload
       # Initializes a new instance of the adapter.
       #
       def initialize
-        @storage_config = PresignedUpload.configuration.storage_config
+        @storage_options = PresignedUpload.configuration.storage_options
       end
 
       protected
@@ -24,7 +24,7 @@ module PresignedUpload
       # Returns the storage configuration for the adapter.
       #
       # @return [Hash] The storage configuration.
-      attr_reader :storage_config
+      attr_reader :storage_options
     end
   end
 end

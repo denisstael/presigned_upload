@@ -7,21 +7,22 @@ module PresignedUpload
   class Configuration
     AVAILABLE_STORAGES = [:aws].freeze
 
-    attr_accessor :storage, :storage_config
+    attr_accessor :storage, :storage_options
+    attr_reader :adapter_class
 
     def initialize
       @storage = nil
-      @storage_config = {}
+      @storage_options = {}
     end
 
     def configure!
-      unless AVAILABLE_STORAGES.include?(@storage)
+      unless AVAILABLE_STORAGES.include?(storage)
         raise InvalidStorage, "Invalid storage. Allowed types are: #{AVAILABLE_STORAGES}"
       end
 
-      raise InvalidStorageConfig, "Empty storage configuration" if @storage_config.empty?
+      raise InvalidStorageConfig, "Empty storage configuration" if storage_options.empty?
 
-      case @storage
+      case storage
       when :aws
         load_aws
       end
@@ -35,11 +36,13 @@ module PresignedUpload
       require_aws_dependencies!
 
       required_config_keys = [:bucket]
-      unless required_config_keys.all? { |key| @storage_config.key?(key) }
+      storage_options.each_key { |key| storage_options.except!(key) unless required_config_keys.include?(key) }
+
+      unless required_config_keys.all? { |key| storage_options.key?(key) }
         raise InvalidStorageConfig, "Missing storage configuration. Required keys are: #{required_config_keys}"
       end
 
-      @storage_config.each_key { |key| @storage_config.except!(key) unless required_config_keys.include?(key) }
+      @adapter_class = PresignedUpload::Adapter::Aws
     end
 
     def require_aws_dependencies!
