@@ -3,10 +3,8 @@
 require "rails/railtie"
 require "presigned_upload/models"
 
-# rubocop:disable Style/Documentation
-
 module PresignedUpload
-  class Railtie < Rails::Railtie
+  class Railtie < Rails::Railtie # :nodoc:
     initializer "presigned_upload.initialize" do
       ActiveSupport.on_load(:active_record) do
         ActiveRecord::Base.extend PresignedUpload::Models
@@ -14,5 +12,3 @@ module PresignedUpload
     end
   end
 end
-
-# rubocop:enable Style/Documentation

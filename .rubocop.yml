@@ -26,3 +26,8 @@ Metrics/BlockLength:
   Enabled: true
   Exclude:
     - "spec/**/*"
+
+Naming/HeredocDelimiterNaming:
+  Enabled: true
+  Exclude:
+    - "presigned_upload.gemspec"

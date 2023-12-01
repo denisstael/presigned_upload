@@ -26,7 +26,7 @@ module PresignedUpload
     end
 
     # rubocop:disable Metrics/MethodLength
-    #
+
     # Calling this method in the context of the model class includes Uploadable::Model module, which includes
     # all the behavior from the Uploadable module and the Uploadable::Model, including validations and callbacks
     #
