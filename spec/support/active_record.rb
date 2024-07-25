@@ -11,7 +11,7 @@ load "#{File.dirname(__FILE__)}/schema.rb"
 class UploadLink < ActiveRecord::Base
   private
 
-  def generate_store_path
-    "generated_store_path"
+  def generate_store_dir
+    "generated/store/dir"
   end
 end

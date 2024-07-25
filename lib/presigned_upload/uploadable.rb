@@ -34,8 +34,6 @@ module PresignedUpload
       include Uploadable
 
       included do
-        attr_readonly :original_name, :content_type, :store_path
-
         validates :original_name, :content_type, :upload_status, presence: true
 
         enum upload_status: { initial: "initial", completed: "completed" }
@@ -54,14 +52,13 @@ module PresignedUpload
         presigned_url(store_path, :get)
       end
 
-      # Returns a presigned URL for uploading the file. Returns `nil` if the store path is blank or the
-      # upload status is 'completed'.
+      # Returns a presigned URL for uploading the file. Returns `nil` if the upload status is 'completed'.
       #
       # @return [String, nil] The presigned URL for uploading the file or `nil` if the upload status is
-      #   'completed' or store path is not present.
+      #   already marked as completed.
       #
       def upload_url
-        return if store_path.blank? || completed?
+        return if completed?
 
         presigned_url(store_path, :put)
       end
@@ -70,6 +67,18 @@ module PresignedUpload
       #
       def delete_stored_file
         delete_file(store_path)
+      end
+
+      # Returns the file store path.
+      #
+      # The store path is constructed by combining the storage directory
+      #   with the `original_name` of the file. If `store_dir` is present, it is
+      #   included in the path. If `store_dir` is not present, then the file
+      #   will be saved in the root directory.
+      #
+      # @return [String] the storage path for the uploaded file.
+      def store_path
+        "#{store_dir.present? ? "#{store_dir}/" : ""}#{original_name}"
       end
     end
   end

@@ -32,7 +32,7 @@ RSpec.describe PresignedUpload::Configuration do
 
         expect do
           config.configure!
-        end.to raise_error(PresignedUpload::InvalidStorageConfig, /Empty storage configuration/)
+        end.to raise_error(PresignedUpload::InvalidStorageConfig, /Empty storage options configuration/)
       end
     end
 

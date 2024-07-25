@@ -31,33 +31,32 @@ module PresignedUpload
     # all the behavior from the Uploadable module and the Uploadable::Model, including validations and callbacks
     #
     # @param [Hash] options Options hash
-    # @option options [Symbol] :store_path The path to the storage location
+    # @option options [Symbol] :store_dir The path to the storage location directory
     #   Accepts a Symbol value, which will try to call a method with same name
-    #   in model, a String value representing the store path or a Proc to call
+    #   in model, a String value representing the store directory or a Proc to call
     #
     # @example
     #
     #   UploadLink < ApplicationRecord
-    #     presigned_uploadable_model, store_path: :generate_store_path
+    #     presigned_uploadable_model, store_dir: :generate_store_dir
     #   end
     #
     def presigned_uploadable_model(options = {})
       include Uploadable::Model
 
-      store_path = options[:store_path]
+      store_dir = options[:store_dir]
 
-      before_create do
-        self.store_path =
-          case store_path
-          when Symbol
-            __send__(store_path)
-          when String
-            store_path
-          when Proc
-            store_path.call
-          else
-            "uploads/#{model_name.plural}/#{original_name}"
-          end
+      define_method :store_dir do
+        case store_dir
+        when Symbol
+          __send__(store_dir)
+        when String
+          store_dir
+        when Proc
+          instance_exec(&store_dir)
+        else
+          "uploads/#{model_name.plural}/#{id}"
+        end
       end
     end
     # rubocop:enable Metrics/MethodLength

@@ -8,17 +8,17 @@ Gem::Specification.new do |spec|
   spec.authors = ["Denis Stael"]
   spec.email = ["denissantistael@gmail.com"]
 
-  spec.summary = "Control model associated files uploads via presigned URL to cloud storage services."
+  spec.summary = "Control model associated files uploads via presigned URLs to cloud storage services."
   spec.description = <<-EOF
-    "This gem provides an easy way to handle direct file uploads to cloud storage services via presigned URL."
+    "Handle direct file uploads to cloud storage services via presigned URLs."
   EOF
 
-  spec.homepage = "https://github.com/DenisStael/presigned_upload"
+  spec.homepage = "https://github.com/denisstael/presigned_upload"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 2.6.0"
 
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "https://github.com/DenisStael/presigned_upload"
+  spec.metadata["source_code_uri"] = "https://github.com/denisstael/presigned_upload"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.

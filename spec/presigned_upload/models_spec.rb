@@ -12,48 +12,44 @@ RSpec.describe PresignedUpload::Models do
   end
 
   describe ".presigned_uploadable_model" do
-    let(:model_instance) { UploadLink.new }
+    let(:model_instance) do
+      UploadLink.new(original_name: "example.txt", content_type: "text/plain", upload_status: "initial")
+    end
 
     it "includes the Uploadable::Model module" do
       expect(UploadLink).to receive(:include).with(PresignedUpload::Uploadable::Model)
       UploadLink.presigned_uploadable_model
     end
 
-    context "when store_path is provided as a symbol" do
-      before { UploadLink.presigned_uploadable_model(store_path: :generate_store_path) }
+    context "when store_dir is provided as a symbol" do
+      before { UploadLink.presigned_uploadable_model(store_dir: :generate_store_dir) }
 
-      it "sets store_path based on the symbol" do
-        model_instance.run_callbacks(:create)
-
-        expect(model_instance.store_path).to eq("generated_store_path")
+      it "sets store_dir based on the symbol" do
+        expect(model_instance.store_dir).to eq("generated/store/dir")
       end
     end
 
-    context "when store_path is provided as a string" do
-      before { UploadLink.presigned_uploadable_model(store_path: "custom_path") }
+    context "when store_dir is provided as a string" do
+      before { UploadLink.presigned_uploadable_model(store_dir: "custom/string/dir") }
 
-      it "sets store_path to the provided string" do
-        model_instance.run_callbacks(:create)
-        expect(model_instance.store_path).to eq("custom_path")
+      it "sets store_dir to the provided string" do
+        expect(model_instance.store_dir).to eq("custom/string/dir")
       end
     end
 
-    context "when store_path is provided as a Proc" do
-      before { UploadLink.presigned_uploadable_model(store_path: -> { "custom_path_from_proc" }) }
+    context "when store_dir is provided as a Proc" do
+      before { UploadLink.presigned_uploadable_model(store_dir: -> { "custom/proc/dir" }) }
 
-      it "sets store_path based on the Proc" do
-        model_instance.run_callbacks(:create)
-        expect(model_instance.store_path).to eq("custom_path_from_proc")
+      it "sets store_dir based on the Proc" do
+        expect(model_instance.store_dir).to eq("custom/proc/dir")
       end
     end
 
-    context "when store_path is not provided" do
+    context "when store_dir is not provided" do
       before { UploadLink.presigned_uploadable_model }
 
-      it "sets a default store_path based on model attributes" do
-        model_instance.original_name = "example.txt"
-        model_instance.run_callbacks(:create)
-        expect(model_instance.store_path).to eq("uploads/upload_links/example.txt")
+      it "sets a default store_dir based on model attributes" do
+        expect(model_instance.store_dir).to eq("uploads/upload_links/#{model_instance.id}")
       end
     end
   end

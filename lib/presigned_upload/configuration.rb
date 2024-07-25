@@ -17,10 +17,10 @@ module PresignedUpload
 
     def configure!
       unless AVAILABLE_STORAGES.include?(storage)
-        raise InvalidStorage, "Invalid storage. Allowed types are: #{AVAILABLE_STORAGES}"
+        raise InvalidStorage, "Invalid storage option. Allowed types are: #{AVAILABLE_STORAGES}"
       end
 
-      raise InvalidStorageConfig, "Empty storage configuration" if storage_options.empty?
+      raise InvalidStorageConfig, "Empty storage options configuration" if storage_options.empty?
 
       case storage
       when :aws
